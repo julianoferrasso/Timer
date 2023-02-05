@@ -6,6 +6,7 @@ import { dafaultTheme } from './styles/themes/default'
 import { GlobalStyle } from './styles/themes/global'
 
 export function App() {
+  // return <ExemploContexto />
   return (
     <ThemeProvider theme={dafaultTheme}>
       <BrowserRouter>
