@@ -12,7 +12,6 @@ import {
 
 import { NewCycleForm } from './components/NewCycleForm'
 import { Countdown } from './components/Countdown'
-// import { FormProvider } from 'react-hook-form/dist/useFormContext'
 
 interface Cycle {
   id: string
@@ -28,7 +27,7 @@ interface CycleContextData {
   activeCycleId: string | null
   amountSecondsPassed: number
   markCurrentCycleAsFinished: () => void
-  handleSetAmountPassed: (arg: number) => void
+  handleSetAmountPassed: (seconds: number) => void
 }
 
 export const CyclesContext = createContext({} as CycleContextData)
@@ -40,11 +39,11 @@ const newCycleFormValidationSchema = zod.object({
     .min(1, 'O ciclo precisa ser no mínimo 5min')
     .max(60, 'O ciclo precisa ser no máximo 60min'),
 })
-
 // interface newCycleFormData {
 //   task: string
 //   minutesAmount: number
 // }
+
 type newCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
 
 export function Home() {
@@ -62,7 +61,7 @@ export function Home() {
    *   }
    * }
    */
-  const formNewCycle = useForm<newCycleFormData>({
+  const newCycleForm = useForm<newCycleFormData>({
     resolver: zodResolver(newCycleFormValidationSchema),
     defaultValues: {
       task: '',
@@ -70,7 +69,7 @@ export function Home() {
     },
   })
 
-  const { handleSubmit, watch, reset } = formNewCycle
+  const { handleSubmit, watch, reset } = newCycleForm
 
   function markCurrentCycleAsFinished() {
     setCycles((state) =>
@@ -119,6 +118,7 @@ export function Home() {
     setActiveCycleId(null)
   }
 
+  // para desabilitar o submit
   const task = watch('task')
   const isSubmitDisable = !task
 
@@ -134,7 +134,7 @@ export function Home() {
             handleSetAmountPassed,
           }}
         >
-          <FormProvider {...formNewCycle}>
+          <FormProvider {...newCycleForm}>
             <NewCycleForm />
           </FormProvider>
 
