@@ -17,7 +17,7 @@ export function History() {
         <table>
           <thead>
             <tr>
-              <th>Tarefa</th>
+              <th>Tarefas</th>
               <th>Duração</th>
               <th>Início</th>
               <th>Status</th>
